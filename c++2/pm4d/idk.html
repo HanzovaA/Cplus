@@ -1,0 +1,93 @@
+!DOCTYPE html
+html lang=&cs&
+head
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;title&gt;Piškvorky&lt;/title&gt;
+&ltstyle&
+body {
+font-family: Arial, sans-serif;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+height: 100vh;
+background-color: #f0f0f0;
+}
+h1 {
+color: #333;
+}
+.grid {
+display: grid;
+grid-template-columns: repeat(3, 100px);
+grid-template-rows: repeat(3, 100px);
+gap: 5px;
+}
+.cell {
+width: 100px;
+height: 100px;
+background-color: #fff;
+
+border: 2px solid #333;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 2em;
+cursor: pointer;
+}
+.reset-btn {
+margin-top: 20px;
+padding: 10px 20px;
+font-size: 1.2em;
+cursor: pointer;
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Piškvorky&lt;/h1&gt;
+&lt;div class=&quot;grid&quot; id=&quot;grid&quot;&gt;
+&lt;div class=&quot;cell&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;cell&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;cell&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;cell&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;cell&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;cell&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;cell&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;cell&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;cell&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;button class=&quot;reset-btn&quot; id=&quot;resetBtn&quot;&gt;Resetovat&lt;/button&gt;
+
+&lt;script&gt;
+const cells = document.querySelectorAll(&#39;.cell&#39;);
+const resetBtn = document.getElementById(&#39;resetBtn&#39;);
+let currentPlayer = &#39;X&#39;;
+
+// Funkce pro nastavení X nebo O do buněk
+function handleCellClick(event) {
+const cell = event.target;
+if (cell.textContent === &#39;&#39;) {
+cell.textContent = currentPlayer;
+currentPlayer = currentPlayer === &#39;X&#39; ? &#39;O&#39; : &#39;X&#39;;
+}
+}
+
+// Přidání klikací funkce do každé buňky
+cells.forEach(cell =&gt; {
+cell.addEventListener(&#39;click&#39;, handleCellClick);
+});
+
+// Funkce pro resetování hry
+function resetGame() {
+cells.forEach(cell =&gt; {
+cell.textContent = &#39;&#39;;
+});
+currentPlayer = &#39;X&#39;; // Nastavíme zpět na hráče X
+}
+
+// Při kliknutí na reset tlačítko se hra resetuje
+
+resetBtn.addEventListener(&#39;click&#39;, resetGame);
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;

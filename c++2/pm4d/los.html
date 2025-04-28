@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Losovadlo znaků</title>
+</head>
+<body>
+    <h2>Losovadlo znaků</h2>
+    
+    <!-- Vstupní pole pro zadání prvního znaku -->
+    <input type="text" id="char1" placeholder="Zadejte první znak">
+    
+    <!-- Vstupní pole pro zadání druhého znaku -->
+    <input type="text" id="char2" placeholder="Zadejte druhý znak">
+    
+    <!-- Tlačítko pro spuštění losování mezi dvěma zadanými znaky -->
+    <button onclick="drawCharacter()">Losovat</button>
+    
+    <!-- Oblast pro zobrazení výsledku vylosovaného znaku -->
+    <p id="result"></p>
+
+    <script>
+        // Funkce pro losování mezi dvěma zadanými znaky
+        function drawCharacter() {
+            // Načtení hodnot z polí pro zadání znaků
+            let char1 = document.getElementById("char1").value;
+            let char2 = document.getElementById("char2").value;
+
+            // Kontrola, zda byly zadány platné jednotlivé znaky
+            if (char1.length === 1 && char2.length === 1) {
+                // Losování mezi dvěma znaky pomocí náhodného čísla
+                let result = Math.random() < 0.5 ? char1 : char2;
+                
+                // Zobrazení vylosovaného znaku
+                document.getElementById("result").innerText = "Vylosovaný znak: " + result;
+            } else {
+                // Pokud nejsou zadány platné znaky, zobrazí se upozornění
+                document.getElementById("result").innerText = "Zadejte platné znaky.";
+            }
+        }
+    </script>
+</body>
+</html>

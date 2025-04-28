@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AZ kvíz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url(azq.jpg);
+        }
+        h1 {
+            color: #000000;
+        }
+        .hex-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .hex {
+            width: 100px;
+            height: 86px;
+            background-color: #ddd;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            margin: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .player1 {
+            background-color: lightblue;
+        }
+        .player2 {
+            background-color: lightcoral;
+        }
+        #question-container {
+            margin-top: 20px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<h1>AZ kvíz</h1>
+<div class="hex-grid" id="hex-grid">
+    <!-- Šestiúhelníky budou vygenerovány pomocí JavaScriptu -->
+</div>
+
+<div id="question-container">
+    <p id="question-text">Vyberte šestiúhelník pro otázku.</p>
+    <button id="next-question" style="display:none" onclick="nextQuestion()">Další otázka</button>
+</div>
+
+<script>
+    const questions = [
+        {question: "Které zvíře je největší na světě?", answer: "Velryba"},
+        {question: "Jaké je hlavní město Francie?", answer: "Paříž"},
+        {question: "Která planeta je nejblíže Slunci?", answer: "Merkur"},
+        {question: "Kdo napsal knihu '1984'?", answer: "George Orwell"},
+        {question: "Kolik má člověk prstů na jedné ruce?", answer: "Pět"},
+        {question: "Jaký je chemický symbol pro vodu?", answer: "H2O"},
+        {question: "Které moře je největší?", answer: "Středozemní moře"}
+    ];
+
+    let currentPlayer = 1;
+    let currentHex = null;
+    const hexGrid = document.getElementById("hex-grid");
+    const questionText = document.getElementById("question-text");
+    const nextQuestionButton = document.getElementById("next-question");
+
+    // Vytvoření hracího pole s hexagony
+    for (let i = 0; i < 19; i++) {
+        const hex = document.createElement("div");
+        hex.classList.add("hex");
+        hex.innerText = i + 1;
+        hex.dataset.index = i;
+        hex.onclick = () => selectHex(i);
+        hexGrid.appendChild(hex);
+    }
+
+    // Výběr šestiúhelníku pro odpověď
+    function selectHex(index) {
+        if (currentHex === null) {
+            currentHex = index;
+            questionText.innerText = questions[currentHex % questions.length].question;
+            nextQuestionButton.style.display = "inline-block";
+        } else {
+            alert("Nejdřív musíte odpovědět na otázku!");
+        }
+    }
+
+    // Kontrola odpovědi a přiřazení hexagonu hráči
+    function nextQuestion() {
+        const answer = prompt("Zadejte odpověď:");
+        const correctAnswer = questions[currentHex % questions.length].answer;
+
+        if (answer.toLowerCase() === correctAnswer.toLowerCase()) {
+            document.querySelector(`[data-index="${currentHex}"]`).classList.add(`player${currentPlayer}`);
+            currentPlayer = currentPlayer === 1 ? 2 : 1; // Změna hráče
+        } else {
+            alert(`Špatně! Správná odpověď byla: ${correctAnswer}`);
+        }
+
+        currentHex = null;
+        questionText.innerText = "Vyberte šestiúhelník pro otázku.";
+        nextQuestionButton.style.display = "none";
+    }
+
+</script>
+
+</body>
+</html>

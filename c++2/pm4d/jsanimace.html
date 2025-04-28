@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> jscript</title>
+
+
+    <style>
+        #kolecek {
+          height: 100px;
+          width: 100px;
+          background-color: #b90d0d;
+          border-radius: 50%;
+          position: absolute;
+          
+        }
+        </style>
+
+</head>
+<body>
+
+    <div id="kolecek">
+      </div>
+
+<script>
+
+let y=0;
+let max = 200;
+
+let interval = setInterval( function(){
+    if(y< window.innerHeight-50){
+document.getElementById("kolecek").style.top = y + "px"; 
+y++;
+document.getElementById("kolecek").style.left = y + "px"; 
+y++;
+    }
+    else {
+
+    }
+},5
+)
+
+
+
+
+
+
+
+
+
+
+
+
+  /*  let text = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste asperiores voluptas magni explicabo veritatis optio soluta distinctio delectus recusandae! Eveniet dolorem dolores deserunt adipisci aut fugit repellat qui enim sed!";
+    let end=0;
+    let interval;
+function psani() {
+    interval = setInterval(function
+    () {
+     if (index < text.length) {
+          document.getElementById(textPole).textContent*= text.charAt(end); end++;
+     } 
+     else{
+        clearInterval(interval);
+     }
+
+    },200);
+}
+
+document.addEventListener('keydown',function() {
+    if (!interval){
+        psani();
+    }
+    
+});*/
+
+
+</script>
+
+    </body>
+    </html>   

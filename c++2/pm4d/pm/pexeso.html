@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pexeso</title>
+    <style>
+        .card {
+            width: 200px;
+            height: 200px;
+            background-image: url(POZAD.jpg);
+            display: inline-block;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 10px;
+            position: relative; /* Přidáno pro správné umístění obrázků */
+        }
+        .flipped {
+            background-color: white; /* Pokud je karta otočená, změní se pozadí */
+        }
+        .card img {
+            width: 100%; /* Nastavíme šířku na 100% aaaa*/
+            height: 100%; /* Nastavíme výšku na 100% */
+            display: none; /* Skryté ve výchozím stavu */
+            position: absolute; /* Pozice obrázku */
+            top: 0; /* Umístění obrázku */
+            left: 0; /* Umístění obrázku */
+        }
+        .flipped img {
+            display: block; /* Zobrazíme obrázek, když je karta otočená */
+        }
+    </style>
+</head>
+<body>
+
+<h1>Pexeso</h1>
+<div id="game-board">
+    <div class="card" onclick="flipCard(this)" data-value="A"> <img src="planet1.jpg" alt="A"></div>
+    <div class="card" onclick="flipCard(this)" data-value="B"><img src="planet2.jpg" alt="B"></div>
+    <div class="card" onclick="flipCard(this)" data-value="C"><img src="planet3.jpg" alt="C"></div>
+    <div class="card" onclick="flipCard(this)" data-value="A"><img src="planet1.jpg" alt="A"></div>
+    <div class="card" onclick="flipCard(this)" data-value="B"><img src="planet2.jpg" alt="B"></div>
+    <div class="card" onclick="flipCard(this)" data-value="C"><img src="planet3.jpg" alt="C"></div>
+</div>
+
+<script>
+    let firstCard = null; // Proměnná pro první otočenou kartu
+    let isFlipping = false; // Zajišťuje, že se karty neotáčejí, když už se kontroluje pár
+
+    // Funkce pro otočení karty
+    function flipCard(card) {
+        if (card.classList.contains('flipped') || isFlipping) return; // Ignoruje, pokud je karta již otočená nebo probíhá kontrola
+
+        card.classList.add('flipped'); // Přidáme třídu "flipped", která odstraní zadní obrázek
+
+        // Zobrazíme obrázek uvnitř karty
+        const img = card.querySelector('img');
+        img.style.display = 'block'; // Zobrazíme obrázek
+
+        if (!firstCard) {
+            firstCard = card; // Uloží první kartu
+        } else {
+            isFlipping = true; // Označ, že se právě kontrolují dvě karty
+            if (firstCard.getAttribute('data-value') === card.getAttribute('data-value')) {
+                alert('Pár nalezen!');
+                firstCard = null; // Resetujeme první kartu
+                isFlipping = false; // Znovu povolí klikání
+            } else {
+                // Otočí zpět, pokud se páry neshodují
+                setTimeout(() => {
+                    firstCard.classList.remove('flipped'); // Otočí zpět první kartu
+                    firstCard.querySelector('img').style.display = 'none'; // Skryje obrázek
+                    card.classList.remove('flipped'); // Otočí zpět druhou kartu
+                    card.querySelector('img').style.display = 'none'; // Skryje obrázek
+                    firstCard = null; // Vyresetujeme první kartu pro další tah
+                    isFlipping = false; // Znovu povolí klikání
+                }, 1000);
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

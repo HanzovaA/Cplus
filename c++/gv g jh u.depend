@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1652172520 source:h:\hanzova\gv g jh u\main.cpp
+	<iostream>
+	<fstream>
+	<ctime>
+	<cstdlib>
+
+1652781169 source:\\pdc\homes\alena.hanzova\documents\hanzova\gv g jh u\main.cpp
+	<iostream>
+	<fstream>
+	<ctime>
+	<cstdlib>
+	<unistd.h>
+	<windows.h>
+

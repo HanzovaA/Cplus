@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piškvorky</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+        }
+
+        .cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            border: 1px solid #000;
+            font-size: 2rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        #status {
+            margin-top: 20px;
+            font-size: 1.5rem;
+        }
+
+        #reset {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Piškvorky</h1>
+    <div id="game-board">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+    </div>
+    <div id="status"></div>
+    <button id="reset">Restart</button>
+
+    <script>
+        let currentPlayer = 'X';
+        let isGameOver = false;
+
+        const cells = document.querySelectorAll('.cell');
+        const statusDisplay = document.getElementById('status');
+        const resetButton = document.getElementById('reset');
+
+        const winningCombinations = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+
+        function handleCellClick(event) {
+            const cell = event.target;
+
+            // Pokud buňka už je obsazená nebo je hra u konce, ignoruj kliknutí
+            if (cell.textContent !== '' || isGameOver) return;
+
+            cell.textContent = currentPlayer;
+
+            if (checkWinner()) {
+                statusDisplay.textContent = `Hráč ${currentPlayer} vyhrál!`;
+                isGameOver = true;
+            } else if (Array.from(cells).every(cell => cell.textContent !== '')) {
+                statusDisplay.textContent = 'Remíza!';
+                isGameOver = true;
+            } else {
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                statusDisplay.textContent = `Hraje: ${currentPlayer}`;
+            }
+        }
+
+        function checkWinner() {
+            return winningCombinations.some(combination => {
+                const [a, b, c] = combination;
+                return cells[a].textContent === currentPlayer &&
+                       cells[a].textContent === cells[b].textContent &&
+                       cells[a].textContent === cells[c].textContent;
+            });
+        }
+
+        function resetGame() {
+            currentPlayer = 'X';
+            isGameOver = false;
+            statusDisplay.textContent = `Hraje: ${currentPlayer}`;
+            cells.forEach(cell => {
+                cell.textContent = '';
+            });
+        }
+
+        cells.forEach(cell => {
+            cell.addEventListener('click', handleCellClick);
+        });
+
+        resetButton.addEventListener('click', resetGame);
+        statusDisplay.textContent = `Hraje: ${currentPlayer}`;
+    </script>
+</body>
+</html>

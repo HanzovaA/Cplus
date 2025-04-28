@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<?php include 'conn.php';?>
+<title>form</title>
+</head>
+<body>
+    <form action="reg_user.php" method="post" id="register">
+Email: <input type="email" class="input-field" name="Email" placeholder="email" required>  
+<label for="Role">Role:</label>
+<select id="Role" name="Role" required>
+    <option value="guest">guest</option>
+    <option value="teacher">teacher</option>
+    <option value="student">student</option>
+</select>
+password: <input type="password" class="input-field" name="password" placeholder="Enter Password" required>
+
+<button type="submit"  name="register" class="submit-bttn" value="Register">Register</button>  
+</form>
+</body>   
+
+</html>    

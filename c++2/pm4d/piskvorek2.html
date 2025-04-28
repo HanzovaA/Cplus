@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piškvorek</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-image: url(tict.png);
+        }
+        h1 {
+            color: #350450;
+            background-color: antiquewhite;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: #fff;
+            border: 5px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .cell img {
+            width: 80px;
+            height: 80px;
+        }
+        .reset-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: rgb(255, 140, 0);
+        }
+        #status{
+        font-size: 20px;
+        background-color: #56f7dc;
+        padding: 20px;
+        border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Piškvorek</h1>
+    <div id="status"></div>
+    <div class="grid" id="grid">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+    </div>
+    <button class="reset-btn" id="resetBtn">Resetovat</button>
+
+    <script>
+        const cells = document.querySelectorAll('.cell');
+        const resetBtn = document.getElementById('resetBtn');
+        let currentPlayer = 'X';
+        const statusDisplay = document.getElementById('status');
+       
+        const xImage = 'x-image.png';
+        const oImage = 'o-image.png';
+
+
+        function handleCellClick(event) {
+            const cell = event.target;
+
+    
+            if (cell.innerHTML === '') {
+                const img = document.createElement('img');
+                if (currentPlayer === 'X') {
+                    img.src = xImage;
+                    currentPlayer = 'O'; 
+                     statusDisplay.textContent = `Hraje: ${currentPlayer}`;
+                } else {
+                    
+                    img.src = oImage;
+                    currentPlayer = 'X'; 
+                    statusDisplay.textContent = `Hraje: ${currentPlayer}`;
+                }
+                cell.appendChild(img);
+            }
+        }
+
+      
+        cells.forEach(function (cell) {
+            cell.addEventListener('click', handleCellClick);
+        });
+
+      
+        function resetGame() {
+            cells.forEach(function (cell) {
+                cell.innerHTML = ''; 
+            });
+            currentPlayer = 'X'; 
+        }
+
+        
+        resetBtn.addEventListener('click', resetGame);
+    </script>
+</body>
+</html>
